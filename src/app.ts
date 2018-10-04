@@ -6,6 +6,15 @@
 // }
 
 
+interface Book {
+    id: number;
+    title: string;
+    author: string;
+    available: boolean;
+    category: Category;
+    pages?: number;
+    markDamaged?(reason: string): void;
+}
 
 interface bookInfo {
     title: string;
@@ -13,6 +22,7 @@ interface bookInfo {
     available: boolean;
     category: Category;
 }
+
 enum Category {
     JavaScript,
     CSS,
@@ -21,8 +31,8 @@ enum Category {
     Angular
 }
 
-function getAllBooks(){
-    let allBooks:bookInfo[] = [
+function getAllBooks(): Array<Book> {
+    let allBooks: Array<any> = [
         { title: 'Refactoring JavaScript', author: 'Evan Burchard', available: true, category: Category.JavaScript },
         { title: 'JavaScript Testing', author: 'Liang Yuxian Eugene', available: false, category: Category.JavaScript},
         { title: 'CSS Secrets', author: 'Lea Verou', available: true, category: Category.CSS },
@@ -62,3 +72,20 @@ function logBookTitles(books: Array<String>): void{
     books.forEach(element => console.log(element));
 }
 logBookTitles(getBookTitlesByCategory(Category.JavaScript));
+
+
+function printBook(book: Book) {
+    console.log(book.title + ' by ' + book.author)
+}
+let myBook: Book = {
+    id: 5,
+    title: 'Colors, Backgrounds, and Gradients',
+    author: 'Eric A. Meyer',
+    available: true,
+    category: Category.CSS,
+    pages: 200,
+    markDamaged: reason => console.log(`Damaged: ${reason}`)
+};
+
+printBook(myBook)
+myBook.markDamaged('missing back cover');
